@@ -92,7 +92,7 @@ func main() {
 	fRemvHelp := fsRemv.Bool("h", false, "show help for rm")
 	fRemvForce := fsRemv.Bool("force", false, "try to automagically remove buckets - DATA LOSS")
 	fRemvWait := fsRemv.String("wait", "", "block on the operation, value is: dots, events (default), ???")
-	fRemNoWait := fsRemv.Bool("nowait", false, "don't block on the operation")
+	fRemvNoWait := fsRemv.Bool("nowait", false, "don't block on the operation")
 
 	// sfm wait [-h] <stack>
 	fsWait := flag.NewFlagSet("wait", flag.ExitOnError)
@@ -460,7 +460,7 @@ func (s stack) make(args []string, tmpl string, params string, pFiles []string, 
 	return 0
 }
 
-func (s stack) remv(args []string, force bool, wait string) int {
+func (s stack) remv(args []string, force bool, wait string, nowait bool) int {
 	if len(args) != 1 {
 		fmt.Fprintln(os.Stderr, "rm accepts one positional argument, the name of the stack")
 		fmt.Print(usageRemv)
