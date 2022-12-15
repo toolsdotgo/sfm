@@ -82,7 +82,8 @@ func main() {
 	fMakeTempl := fsMake.String("t", "", "template file - or pass one in on stdin")
 	fMakeSNS := fsMake.String("sns", "", "sns arns to notify")
 	fMakeNoRB := fsMake.Bool("norb", false, "do not rollback on error")
-	fMakeWait := fsMake.String("wait", "", "block on the operation, value is: dots, events, ???")
+	fMakeWait := fsMake.String("wait", "", "block on the operation, value is: dots, events (default), ???")
+	fMakeNoWait := fsMake.Bool("nowait", false, "don't block on the operation")
 	fMakeTags := fsMake.String("tags", "", "k=v,k=v... tags for the stack")
 	fMakeTagsFile := fsMake.String("tagsfile", "", "yaml of json file containing tags for the stack")
 
@@ -90,7 +91,8 @@ func main() {
 	fsRemv := flag.NewFlagSet("rm", flag.ExitOnError)
 	fRemvHelp := fsRemv.Bool("h", false, "show help for rm")
 	fRemvForce := fsRemv.Bool("force", false, "try to automagically remove buckets - DATA LOSS")
-	fRemvWait := fsRemv.String("wait", "", "block on the operation, value is: dots, events, ???")
+	fRemvWait := fsRemv.String("wait", "", "block on the operation, value is: dots, events (default), ???")
+	fRemNoWait := fsRemv.Bool("nowait", false, "don't block on the operation")
 
 	// sfm wait [-h] <stack>
 	fsWait := flag.NewFlagSet("wait", flag.ExitOnError)
@@ -170,14 +172,14 @@ func main() {
 			fmt.Print(usageMake)
 			os.Exit(64)
 		}
-		os.Exit(s.make(fsMake.Args(), *fMakeTempl, *fMakeParams, pff, *fMakeNoRB, *fMakeWait, *fMakeTags, *fMakeTagsFile, *fMakeSNS))
+		os.Exit(s.make(fsMake.Args(), *fMakeTempl, *fMakeParams, pff, *fMakeNoRB, *fMakeWait, *fMakeNoWait, *fMakeTags, *fMakeTagsFile, *fMakeSNS))
 	}
 	if fsRemv.Parsed() {
 		if *fRemvHelp {
 			fmt.Print(usageRemv)
 			os.Exit(64)
 		}
-		os.Exit(s.remv(fsRemv.Args(), *fRemvForce, *fRemvWait))
+		os.Exit(s.remv(fsRemv.Args(), *fRemvForce, *fRemvWait, *fRemvNoWait))
 	}
 	if fsWait.Parsed() {
 		if *fWaitHelp {
@@ -223,7 +225,7 @@ func (s stack) list(args []string, verbose bool) int {
 	return 0
 }
 
-func (s stack) make(args []string, tmpl string, params string, pFiles []string, norb bool, wait, tags, tagsFile string, sns string) int {
+func (s stack) make(args []string, tmpl string, params string, pFiles []string, norb bool, wait string, nowait bool, tags, tagsFile, sns string) int {
 	if len(args) != 1 {
 		fmt.Fprintln(os.Stderr, "mk accepts one positional argument, the name of the stack")
 		fmt.Print(usageMake)
@@ -337,7 +339,7 @@ func (s stack) make(args []string, tmpl string, params string, pFiles []string, 
 	outPipe := isPiped() // if the output is being piped, print the stack name
 
 	dots := wait == "dots"
-	events := wait == "events"
+	events := wait == "events" || (!nowait && !dots)
 
 	// check if stack already exists and do an update if it does
 	// the preference would be to create the stack and then update only
@@ -470,7 +472,7 @@ func (s stack) remv(args []string, force bool, wait string) int {
 	}
 	stack := args[0]
 	dots := wait == "dots"
-	events := wait == "events"
+	events := wait == "events" || (!nowait && !dots)
 
 	h := sfm.Handle{CFNcli: s.cli}
 	if _, err := h.Delete(stack); err != nil {
@@ -951,15 +953,15 @@ Flags
   <glob>  filter results by glob (see Go filepath.Match for supported globs)
 `
 
-const usageMake = `usage: sfm mk [-h] [-t <file>] [-p k=v,k=v...] [-wait style] <name>
+const usageMake = `usage: sfm mk [-h] [-t <file>] [-p k=v,k=v...] [-wait style] [-nowait] <name>
    or: sfm mk [-p k=v,k=v...] <name> <file (template on stdin)
 
 Summary
   mk is the heavy-duty operator in sfm - it creates or updates cloudformation
   stacks. a stack is created if it does not already exist, updated otherwise.
-  in conjunction with the -wait flag, sfm exits non-zero if the stack fails to
-  create or update. without -wait, a non-zero exit code is only returned if the
-  cloudformation createstack api responds with an error.
+  sfm exits non-zero if the stack fails to create or update. with -nowait,
+  a non-zero exit code is only returned if the cloudformation createstack api
+  responds with an error.
 
 Parameters
   parameters can be specified in two ways:
@@ -986,7 +988,8 @@ Flags
   -tagsfile <file> a path to a yaml file containing tags
                    tags provided by '-tags' override the tagsfile
   -wait <style>    block on the operation with either 'dots' or 'events'
-                   any other value will be quiet
+                   default behaviour is 'events'
+  -nowait          dont block on the operation
   <name>           the name of the stack
 `
 
@@ -999,7 +1002,8 @@ Flags
   -h             display this help
   -force         NOT IMPLEMENTED
   -wait <style>  block on the operation with either 'dots' or 'events'
-                 any other value will be quiet
+                 default behaviour is 'events'
+  -nowait          dont block on the operation
   <name>         the name of the stack to delete
 `
 
