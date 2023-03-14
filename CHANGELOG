@@ -1,3 +1,8 @@
+v1.1.1
+
+- Now with 100% more authentic Darwin ARM64 binaries! - Thanks to @samjarrett
+- Various dependency updates
+
 v1.1.0
 
 - Change default behaviour to wait and print events on `mk` and `rm`
