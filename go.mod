@@ -5,7 +5,7 @@ go 1.19
 replace github.com/toolsdotgo/sfm/pkg/sfm => ./pkg/sfm
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.17.7
+	github.com/aws/aws-sdk-go-v2 v1.17.8
 	github.com/aws/aws-sdk-go-v2/config v1.18.19
 	github.com/aws/aws-sdk-go-v2/service/cloudformation v1.27.0
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.31.1
