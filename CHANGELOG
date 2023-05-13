@@ -1,3 +1,9 @@
+v1.2.0
+
+- Now deploys S3 hosted templates directly from S3, increasing max template size to 1MB
+- No longer need to specify the region flag (`-r`) or env var, can use the AWS SDK configured region instead
+- Various dependency updates
+
 v1.1.1
 
 - Now with 100% more authentic Darwin ARM64 binaries! - Thanks to @samjarrett
