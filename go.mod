@@ -1,6 +1,6 @@
 module github.com/toolsdotgo/sfm
 
-go 1.19
+go 1.20
 
 replace github.com/toolsdotgo/sfm/pkg/sfm => ./pkg/sfm
 
