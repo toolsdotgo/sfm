@@ -118,16 +118,6 @@ func main() {
 		os.Exit(64)
 	}
 	region := *freg
-	if region == "" {
-		region = os.Getenv("AWS_REGION")
-	}
-	if region == "" {
-		region = os.Getenv("AWS_DEFAULT_REGION")
-	}
-	if region == "" {
-		fmt.Fprintln(os.Stderr, "no region set - as flag or envar")
-		os.Exit(1)
-	}
 
 	switch flag.Arg(0) {
 	case "ls":
