@@ -369,7 +369,12 @@ func (s stack) make(args []string, tmpl string, params string, pFiles []string, 
 			Capabilities: []types.Capability{types.CapabilityCapabilityNamedIam, types.CapabilityCapabilityAutoExpand}, // NOTE
 			Parameters:   cfpp,
 			Tags:         tagpp,
-			TemplateBody: aws.String(string(b)),
+		}
+		if strings.HasPrefix(tmpl, "s3://") {
+			bucket, path, _ := strings.Cut(strings.TrimPrefix(tmpl, "s3://"), "/")
+			pp.TemplateURL = aws.String(fmt.Sprintf("https://%v.s3.amazonaws.com/%v", bucket, path)) // uses the `Legacy global endpoint`
+		} else {
+			pp.TemplateBody = aws.String(string(b))
 		}
 		if len(arns) > 0 {
 			pp.NotificationARNs = arns
@@ -420,7 +425,12 @@ func (s stack) make(args []string, tmpl string, params string, pFiles []string, 
 		DisableRollback: aws.Bool(norb),
 		Parameters:      cfpp,
 		Tags:            tagpp,
-		TemplateBody:    aws.String(string(b)),
+	}
+	if strings.HasPrefix(tmpl, "s3://") {
+		bucket, path, _ := strings.Cut(strings.TrimPrefix(tmpl, "s3://"), "/")
+		pp.TemplateURL = aws.String(fmt.Sprintf("https://%v.s3.amazonaws.com/%v", bucket, path)) // uses the `Legacy global endpoint`
+	} else {
+		pp.TemplateBody = aws.String(string(b))
 	}
 	if len(arns) > 0 {
 		pp.NotificationARNs = arns
