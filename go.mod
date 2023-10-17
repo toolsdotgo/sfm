@@ -7,7 +7,7 @@ replace github.com/toolsdotgo/sfm/pkg/sfm => ./pkg/sfm
 require (
 	github.com/aws/aws-sdk-go-v2 v1.21.2
 	github.com/aws/aws-sdk-go-v2/config v1.18.45
-	github.com/aws/aws-sdk-go-v2/service/cloudformation v1.34.8
+	github.com/aws/aws-sdk-go-v2/service/cloudformation v1.35.0
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.40.2
 	github.com/toolsdotgo/sfm/pkg/sfm v0.0.0-20220124042655-90327d37d619
 	gopkg.in/yaml.v2 v2.4.0
