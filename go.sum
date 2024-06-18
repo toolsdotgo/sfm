@@ -16,8 +16,8 @@ github.com/aws/aws-sdk-go-v2/internal/ini v1.8.0 h1:hT8rVHwugYE2lEfdFE0QWVo81lF7
 github.com/aws/aws-sdk-go-v2/internal/ini v1.8.0/go.mod h1:8tu/lYfQfFe6IGnaOdrpVgEL2IrrDOf6/m9RQum4NkY=
 github.com/aws/aws-sdk-go-v2/internal/v4a v1.3.10 h1:KPPEosyvs2q6sGbRj/LIGMpqPStDZKtEy/CEbBl+tps=
 github.com/aws/aws-sdk-go-v2/internal/v4a v1.3.10/go.mod h1:6pZBDPNlCwrpj79TpGfjgaliXrC3lvoFGMCg7Rtc7p8=
-github.com/aws/aws-sdk-go-v2/service/cloudformation v1.51.3 h1:HlsyxSED4xEtAq7WsFh7oMuBg2OnK+Q2thz0MQR5uAY=
-github.com/aws/aws-sdk-go-v2/service/cloudformation v1.51.3/go.mod h1:KiLdmslIONL5WXMrelwfAzisbZ5UckYT9FGtZJASKnk=
+github.com/aws/aws-sdk-go-v2/service/cloudformation v1.51.4 h1:aRGsJQ8BiImIMWMDCiTEUXNiEOl6bR4Ec8q0iQ25xuk=
+github.com/aws/aws-sdk-go-v2/service/cloudformation v1.51.4/go.mod h1:b6FVlVzvwIs0JsEhzOrZ5Xmc/6a9dJzWLV0y8P+9n9o=
 github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.11.2 h1:Ji0DY1xUsUr3I8cHps0G+XM3WWU16lP6yG8qu1GAZAs=
 github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.11.2/go.mod h1:5CsjAbs3NlGQyZNFACh+zztPDI7fU6eW9QsxjfnuBKg=
 github.com/aws/aws-sdk-go-v2/service/internal/checksum v1.3.12 h1:77ORAasgQRiNRi1du4UVmttQg2Wf41WSe7TvpmpmDg0=
