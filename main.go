@@ -13,6 +13,7 @@ import (
 	"path"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 	"time"
 
@@ -535,12 +536,7 @@ func (s stack) block(name string, dots, events bool) error {
 	ppev := &cloudformation.DescribeStackEventsInput{StackName: aws.String(name)}
 
 	var in = func(tt []time.Time, ts time.Time) bool {
-		for _, t := range tt {
-			if ts == t {
-				return true
-			}
-		}
-		return false
+		return slices.Contains(tt, ts)
 	}
 
 	i := 0
