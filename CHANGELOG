@@ -1,3 +1,7 @@
+v1.3.0
+
+- Various dependency updates
+
 v1.2.0
 
 - Now deploys S3 hosted templates directly from S3, increasing max template size to 1MB
