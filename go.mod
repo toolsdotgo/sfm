@@ -5,7 +5,7 @@ go 1.24
 replace github.com/toolsdotgo/sfm/pkg/sfm => ./pkg/sfm
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.47.8
+	github.com/aws/aws-sdk-go-v2 v1.48.0
 	github.com/aws/aws-sdk-go-v2/config v1.33.17
 	github.com/aws/aws-sdk-go-v2/service/cloudformation v1.82.6
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.114.9
@@ -28,6 +28,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sso v1.39.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.44.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.51.9 // indirect
-	github.com/aws/smithy-go v1.28.8 // indirect
+	github.com/aws/smithy-go v1.28.9 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 )
